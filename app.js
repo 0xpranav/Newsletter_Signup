@@ -5,10 +5,14 @@ const app = express();
 const https = require("https");
 const { options } = require("request");
 const res = require("express/lib/response");
+const keys = require(__dirname+"/config.js");
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.urlencoded({extended:true}));
+
+const token_API = keys.API_KEY;
+var token_ID = keys.LIST_ID;
 
 
 
@@ -39,11 +43,11 @@ app.post("/",function(req,res){
 
 var jsonData = JSON.stringify(data);
 
-const url = "https://us18.api.mailchimp.com/3.0/lists/e3ad6d3687"
+const url = "https://us18.api.mailchimp.com/3.0/lists/"+token_ID;
 
 const options = {
     method: "POST",
-    auth: "pranav:541077567680d323ee8892c24b807e32-us18"
+    auth: "pranav:"+token_API
 }
 
 const request = https.request(url, options,function(response){
@@ -76,7 +80,3 @@ app.post("/failure", function(){
 app.listen(process.env.PORT || 3000,function(){
     console.log("server is started");
 });
-
-//541077567680d323ee8892c24b807e32-us18
-
-//e3ad6d3687
